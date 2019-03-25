@@ -44,5 +44,4 @@ public class UserController {
         resource.add(linkTo.withRel("all-users"));
         return resource;
     }
-
 }
