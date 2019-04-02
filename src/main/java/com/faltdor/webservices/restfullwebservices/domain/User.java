@@ -1,5 +1,7 @@
 package com.faltdor.webservices.restfullwebservices.domain;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,12 +15,16 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Api("User Properties")
 public class User {
 
+    @ApiModelProperty(notes = "User Id")
     private int id;
+    @ApiModelProperty("User Name; Should have atleast 2 characters")
     @Size(min=2, message="Name should have atleast 2 characters")
     private String name;
     @Past
+    @ApiModelProperty(notes = "Birthdate musth be on the past. ")
     private Date birthdate;
 
 }
