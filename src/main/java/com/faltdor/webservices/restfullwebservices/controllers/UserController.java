@@ -3,8 +3,13 @@ package com.faltdor.webservices.restfullwebservices.controllers;
 import com.faltdor.webservices.restfullwebservices.domain.User;
 import com.faltdor.webservices.restfullwebservices.exceptions.UserNotFoundException;
 import com.faltdor.webservices.restfullwebservices.services.UserService;
+import com.fasterxml.jackson.databind.ser.BeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +31,16 @@ public class UserController {
     public List<User> retrieveAllUsers(){
         return userService.findAll();
     }
+
+    @GetMapping(value = "/names")
+    public MappingJacksonValue retrieveAllUsersNames(){
+        SimpleBeanPropertyFilter simpleBeanPropertyFilter = SimpleBeanPropertyFilter.filterOutAllExcept("name");
+        FilterProvider filterProvider = new SimpleFilterProvider().addFilter("filterName", simpleBeanPropertyFilter);
+        MappingJacksonValue mappingJacksonValue = new MappingJacksonValue(userService.findAll());
+        mappingJacksonValue.setFilters(filterProvider);
+        return mappingJacksonValue;
+    }
+
 
     @GetMapping("/{userId}")
     public User retrieveUser(@PathVariable int userId){

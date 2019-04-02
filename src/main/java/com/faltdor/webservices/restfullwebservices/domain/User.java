@@ -1,5 +1,6 @@
 package com.faltdor.webservices.restfullwebservices.domain;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Api("User Properties")
+@JsonFilter(value = "filterName")
 public class User {
 
     @ApiModelProperty(notes = "User Id")
